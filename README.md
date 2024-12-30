@@ -24,7 +24,7 @@ This project aims to predict water quality using a dataset of various physicoche
 1. Clone the repository:
    ```bash
    git clone https://github.com/Programming-Sai/Water-Quality-Analysis-ML.git
-   cd water-quality-prediction
+   cd Water-Quality-Analysis-ML
    ```
 2. Set up a virtual environment:
    ```bash
