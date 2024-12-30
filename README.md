@@ -1,16 +1,18 @@
 # Water-Quality-Analysis-ML
 
-
 ---
 
 ## Project Overview
+
 This project aims to predict water quality using a dataset of various physicochemical properties. By leveraging machine learning models, we aim to classify water samples as safe or unsafe based on their attributes.
 
 ## Dataset
+
 - **Source:** [Kaggle - Water Quality Dataset](https://www.kaggle.com/datasets/ozgurdogan646/water-quality-dataset)
 - **Description:** The dataset contains measurements such as pH, turbidity, conductivity, and other parameters used to assess water quality.
 
 ## Goals
+
 1. Explore the dataset and perform data visualization.
 2. Preprocess the data by handling missing values and scaling features.
 3. Train machine learning models to predict water quality.
@@ -18,9 +20,10 @@ This project aims to predict water quality using a dataset of various physicoche
 5. Deploy the final model using a Flask-based web app.
 
 ## Installation
+
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/water-quality-prediction.git
+   git clone https://github.com/Programming-Sai/Water-Quality-Analysis-ML.git
    cd water-quality-prediction
    ```
 2. Set up a virtual environment:
@@ -34,6 +37,7 @@ This project aims to predict water quality using a dataset of various physicoche
    ```
 
 ## Folder Structure
+
 ```
 water-quality-prediction/
 │
@@ -61,6 +65,7 @@ water-quality-prediction/
 ```
 
 ## Usage
+
 1. Explore the dataset:
    - Open and run `notebooks/data_exploration.ipynb` to understand the data and visualize distributions.
 2. Train the model:
@@ -74,28 +79,31 @@ water-quality-prediction/
      ```
 
 ## Key Libraries
+
 - **pandas**: Data manipulation
 - **seaborn & matplotlib**: Data visualization
 - **scikit-learn**: Machine learning models
 - **Flask**: Model deployment
 
 ## Contributors
-- [Your Name](https://github.com/your-username)
+
+- [Mensah Isaiah](https://github.com/Programming-Sai)
 - [Contributor 2](https://github.com/contributor-username)
 - [Contributor 3](https://github.com/contributor-username)
 
 ---
 
 ### **Steps to Set It Up**
+
 1. Create a new repository on GitHub with the name `water-quality-prediction`.
 2. Initialize your project folder locally and link it to the GitHub repo:
    ```bash
    git init
-   git remote add origin https://github.com/your-username/water-quality-prediction.git
+   git remote add origin https://github.com/Programming-Sai/Water-Quality-Analysis-ML.git
    git branch -M main
    git add .
    git commit -m "Initial commit"
    git push -u origin main
    ```
 
-Let me know if you'd like to tweak this further!
+---
