@@ -1,0 +1,168 @@
+hold on to these cells for me. we would come to them in a minute
+
+
+```
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import xgboost as xg
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error as MSE 
+from sklearn.preprocessing import LabelEncoder, MinMaxScaler
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import roc_curve, roc_auc_score, mean_squared_error as MSE, log_loss,r2_score
+import warnings
+warnings.filterwarnings('ignore')
+```
+
+```
+DATA_PATH = "/kaggle/input/water-quality-dataset/waterPollution.csv"
+```
+```
+data = pd.read_csv(DATA_PATH)
+data.head()
+```
+```
+data.isna().sum()
+data.dropna(axis=0,inplace=True)
+columns = ("parameterWaterBodyCategory","observedPropertyDeterminandCode","procedureAnalysedFraction","procedureAnalysedMedia","resultUom","parameterSamplingPeriod","waterBodyIdentifier","Country")
+for i in columns:
+  le = LabelEncoder()
+  data[i] = le.fit_transform(data[i])
+```
+
+```
+x = data.drop(["resultMeanValue"],axis = 1)
+y = data["resultMeanValue"].values
+data["resultMeanValue"].plot()
+```
+
+## Classification
+
+```
+x_train, x_test, y_train, y_test = train_test_split(x,y,test_size = 0.3, random_state = 42)
+def makeClass(y):
+  y = ["Dirty" if x > 500 else "Clean" for x in y]
+  return y
+y_train, y_test = makeClass(y_train),makeClass(y_test)
+scaler = MinMaxScaler()
+x_train = scaler.fit_transform(x_train)
+x_test = scaler.fit_transform(x_test)
+```
+
+```
+def createModels():
+  xgBoost = xg.XGBClassifier()
+  knn = KNeighborsClassifier()
+  svc = SVC(probability=True)
+  randomForest = RandomForestClassifier()
+  adaBoost = AdaBoostClassifier()
+  nb = GaussianNB()
+  return ((xgBoost,"XGBoost Classifier"),(knn,"KNN Classifier"),(svc,"SVC Classifier"),(randomForest,"Random Forest Classifier"),(adaBoost,"AdaBoost Classifier"),(nb,"Naive Bayes Classifier"))
+
+models = createModels()
+for model,name in models:
+  model.fit(x_train,y_train)
+  print(f"Accuracy of {name}: {model.score(x_test,y_test)}")
+```
+
+```
+y_test = [0 if i == "Clean" else 1 for i in y_test]
+for model,name in models:
+  y_score = model.predict_proba(x_test)[:,1] 
+  false_positive_rate, true_positive_rate, threshold = roc_curve(y_test, y_score)
+  print(f'roc_auc_score for {name}: ', roc_auc_score(y_test, y_score))
+plt.subplots(nrows=2,ncols=3,figsize = (25,15))
+figurePos = 1
+for model,name in models:
+  plt.subplot(2,3,figurePos)
+  figurePos += 1
+  y_score = model.predict_proba(x_test)[:,1] 
+  false_positive_rate, true_positive_rate, threshold = roc_curve(y_test, y_score)
+  plt.title(f"ROC Curve {name}")
+  plt.plot(false_positive_rate, true_positive_rate)
+  plt.plot([0, 1], ls="--")
+  plt.plot([0, 0], [1, 0] , c=".7"), plt.plot([1, 1] , c=".7")
+  plt.ylabel('True Positive Rate')
+  plt.xlabel('False Positive Rate')
+plt.show()
+```
+
+```
+features = np.concatenate([data.columns[:7],data.columns[8:]])
+
+model = xg.XGBClassifier()
+model.fit(x_train,y_train)
+feat_imp = pd.DataFrame({'importance':model.feature_importances_})    
+feat_imp['feature'] = features
+feat_imp.sort_values(by='importance', ascending=False, inplace=True)
+feat_imp = feat_imp.iloc[:12]   
+feat_imp.sort_values(by='importance', inplace=True)
+feat_imp = feat_imp.set_index('feature', drop=True)
+feat_imp.plot.barh(title="XGBoost")
+plt.xlabel('Feature Importance Score')
+plt.show()
+```
+## Regression
+```
+x_train, x_test, y_train, y_test = train_test_split(x,y,test_size = 0.3, random_state = 42)
+scaler = MinMaxScaler()
+x_train = scaler.fit_transform(x_train)
+x_test = scaler.fit_transform(x_test)
+regressor = xg.XGBRegressor()\
+            .fit(x_train,y_train)
+preds = regressor.predict(x_test)
+preds
+mse = MSE(y_test,preds)
+r2Score = r2_score(y_test,preds)
+
+print("Metrics for XGBoost Regressor")
+print(f"MSE: {mse}\nRMSE: {mse ** (1/2)}\nR^2 Score: {r2Score}")
+```
+
+## Run Classifier By Features
+
+```
+model = KNeighborsClassifier()
+
+y = data["resultMeanValue"].values
+x = data.drop(["resultMeanValue"],axis = 1)
+
+def makeClass(y):
+  y = ["Dirty" if x > 500 else "Clean" for x in y]
+  return y
+
+
+def fitData(x,y,model,columns):
+  a = x[columns]
+  x_train,x_test,y_train,y_test = train_test_split(a,y,test_size = 0.3,random_state=42)
+  y_train, y_test = makeClass(y_train),makeClass(y_test)
+  scaler = MinMaxScaler()
+  x_train = scaler.fit_transform(x_train)
+  x_test = scaler.fit_transform(x_test)
+  model.fit(x_train,y_train)
+  return model.score(x_test,y_test)
+
+usedCols = list()
+scores = list()
+for col in x.columns:
+  usedCols.append(col)
+  score = fitData(x,y,model,usedCols)
+  scores.append(score)
+  print(f"Accuracy with {col} Feature: {score}")
+  print("-"*65)
+```
+
+```
+plt.figure(figsize=(25,10))
+sns.barplot(x=usedCols,y=scores)
+plt.xticks(rotation=60)
+plt.show()
+```
+
+
+Tell me what each cell does, how correct this is and wheter this is what i have been trying to do all this time or not
