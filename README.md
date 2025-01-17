@@ -87,9 +87,9 @@ water-quality-prediction/
 
 ## Contributors
 
-- [MENSAH LARTEY ISAIAH NII LARTE](https://github.com/Programming-Sai)
-- [ADDO REUBEN NII ADDOTEY](https://github.com/Pope-Addotey2004)
-- [ANTI BRIGHT GYEADU](https://github.com/BrytSnow)
+- [Programming-Sai](https://github.com/Programming-Sai)
+- [Pope-Addotey2004](https://github.com/Pope-Addotey2004)
+- [BrytSnow](https://github.com/BrytSnow)
 
 ---
 
