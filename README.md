@@ -83,13 +83,13 @@ water-quality-prediction/
 - **pandas**: Data manipulation
 - **seaborn & matplotlib**: Data visualization
 - **scikit-learn**: Machine learning models
-- **Flask**: Model deployment
+<!-- - **Flask**: Model deployment -->
 
 ## Contributors
 
-- [Mensah Isaiah](https://github.com/Programming-Sai)
-- [Contributor 2](https://github.com/contributor-username)
-- [Contributor 3](https://github.com/contributor-username)
+- [Programming-Sai](https://github.com/Programming-Sai)
+- [Pope-Addotey2004](https://github.com/Pope-Addotey2004)
+- [BrytSnow](https://github.com/BrytSnow)
 
 ---
 
