@@ -4,7 +4,7 @@ import joblib
 
 # Load the model
 model = joblib.load("./data/XGBoost_model.joblib")
-fav_ico = Image.open("./data/fav.ico")
+fav_ico = Image.open("data/fav.ico")
 st.set_page_config(
     page_title="Water Quality Analysis",  
     page_icon=fav_ico,
