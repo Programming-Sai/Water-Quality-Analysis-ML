@@ -1,13 +1,11 @@
-from PIL import Image
 import streamlit as st
 import joblib
 
 # Load the model
 model = joblib.load("./data/XGBoost_model.joblib")
-fav_ico = Image.open("data/fav.ico")
 st.set_page_config(
     page_title="Water Quality Analysis",  
-    page_icon=fav_ico,
+    page_icon="https://raw.githubusercontent.com/Programming-Sai/Water-Quality-Analysis-ML/main/deployment-ui/data/fav.ico",  # URL to the favicon file in GitHub
     menu_items={
         'Get Help': 'https://github.com/Programming-Sai/Water-Quality-Analysis-ML/issues',
         'Report a Bug': 'https://github.com/Programming-Sai/Water-Quality-Analysis-ML/issues',
