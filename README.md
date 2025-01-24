@@ -4,28 +4,69 @@
 
 ## Project Overview
 
-This project aims to predict water quality using a dataset of various physicochemical properties. By leveraging machine learning models, we aim to classify water samples as safe or unsafe based on their attributes.
+This project aims to predict water quality using a dataset of various physicochemical, socio-economic, and environmental factors. By leveraging machine learning models, we classify water samples as **Clean** or **Dirty** based on their attributes. The final model is deployed using a **Streamlit-based web app**, providing an interactive UI for predictions.
+
+![Deployed Application](./assets/home.png)
+
+**Deployed Application**: [Water Quality Analysis App](https://water-quality-analysis-ml.streamlit.app/)
 
 ## Dataset
 
 - **Source:** [Kaggle - Water Quality Dataset](https://www.kaggle.com/datasets/ozgurdogan646/water-quality-dataset)
-- **Description:** The dataset contains measurements such as pH, turbidity, conductivity, and other parameters used to assess water quality.
+- **Description:** The dataset contains measurements such as population density, waste management indices, development index, and other features used to assess water quality.
 
 ## Goals
 
 1. Explore the dataset and perform data visualization.
-2. Preprocess the data by handling missing values and scaling features.
+2. Preprocess the data by handling missing values, scaling features, and engineering new features:
+   - **Development Index**: GDP × Literacy Rate (2010-2018).
+   - **Waste Index**:
+     \[
+     \text{Waste Index} = \frac{\text{Max Waste Composition} + \text{Other Composition}}{\text{Recycling Percentage}}
+     \]
 3. Train machine learning models to predict water quality.
 4. Evaluate and compare model performance.
-5. Deploy the final model using a Flask-based web app.
+5. Deploy the final model using a **Streamlit-based web app**.
+
+### Features
+
+- **Population Density**: Estimated as the number of people per unit area in a given region.
+- **Waste Index**: A derived feature that measures waste composition against recycling rates.
+- **Development Index**: Calculated using GDP and literacy rate, reflecting socio-economic factors affecting water quality.
+
+#### Data Preprocessing
+
+The preprocessing steps include:
+
+1. Handling missing values and normalizing data where necessary.
+2. Creating derived features such as the **Waste Index** and **Development Index** using formulas:
+
+   $$
+   Waste\ Index = \frac{(Max\ Waste\ Composition + Other\ Composition)}{Recycling\_Percentage}
+   $$
+
+<br>
+
+$$
+Development\_Index = \text{GDP} \times \text{Literacy Rate}
+$$
+
+3. Dropping unnecessary columns like 'Country', 'GDP', and 'TouristMean' to streamline the data.
+4. Feature engineering to ensure all relevant attributes are used for training.
+
+### Model
+
+The final model used for prediction is an **XGBoost classifier**, which was selected after testing several models for accuracy and performance. The model was trained on the preprocessed dataset and evaluated using cross-validation.
 
 ## Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/Programming-Sai/Water-Quality-Analysis-ML.git
    cd Water-Quality-Analysis-ML
    ```
+
 2. Set up a virtual environment:
    ```bash
    python -m venv venv
@@ -44,23 +85,18 @@ water-quality-prediction/
 ├── data/
 │   └── water_quality.csv        # The dataset
 │
+│
 ├── notebooks/
 │   └── data_exploration.ipynb   # For data exploration and visualization
 │   └── model_building.ipynb     # For training the model
-│
-├── src/
-│   ├── train.py                 # Training script
-│   ├── predict.py               # Prediction script
-│   └── utils.py                 # Utility functions
-│
-├── models/
-│   └── water_quality_model.pkl  # Saved model file
-│
-├── app/
-│   ├── app.py                   # Flask app for deployment
-│   └── templates/               # (Optional) HTML templates for the app
+|
+├── deployment-ui/
+│   ├── app.py                   # Streamlit app for deployment
+│   └── assets/                  # Custom styles and images
+|
 │
 ├── requirements.txt             # Python dependencies
+├── .gitignore                   # Python gitignore
 └── README.md                    # Project overview
 ```
 
@@ -73,17 +109,34 @@ water-quality-prediction/
 3. Predict water quality:
    - Use `src/predict.py` to make predictions on new data.
 4. Deploy the model:
-   - Run the Flask app using:
+   - Run the Streamlit app locally:
      ```bash
-     python app/app.py
+     streamlit run deployment-ui/app.py
      ```
+   - Alternatively, use the deployed version: [Water Quality Analysis App](https://water-quality-analysis-ml.streamlit.app/).
 
 ## Key Libraries
 
 - **pandas**: Data manipulation
-- **seaborn & matplotlib**: Data visualization
+- **numpy**: Numerical computations
 - **scikit-learn**: Machine learning models
-<!-- - **Flask**: Model deployment -->
+- **xgboost**: Gradient boosting for tabular data
+- **matplotlib & seaborn**: Data visualization
+- **Streamlit**: Model deployment and interactive UI
+
+---
+
+## Model Performance
+
+Below are the performance metrics and comparison of models tested during development.
+
+**Accuracy Comparison**  
+(Insert image of accuracy comparison between different models here)
+
+**Confusion Matrix for XGBoost**  
+(Insert confusion matrix image for the final XGBoost model here)
+
+---
 
 ## Contributors
 
@@ -107,3 +160,9 @@ water-quality-prediction/
    ```
 
 ---
+
+## Application Features
+
+1. **Interactive UI**: Allows users to input values for Population Density, Waste Index, and Development Index.
+2. **Tooltips for Guidance**: Each input field includes descriptions and formulas to assist users in understanding the required values.
+3. **Real-Time Predictions**: Displays the prediction result (Clean or Dirty) with color-coded feedback.

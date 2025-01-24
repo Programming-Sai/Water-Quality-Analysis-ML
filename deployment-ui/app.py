@@ -9,6 +9,10 @@ st.markdown(
     <style>
     .stNumberInput { margin-bottom: 10px; } 
     .stMarkdown {margin-block: 30px}
+    .stTooltipContent {
+        background-color: #280330;
+        font-size: 14px;
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -17,23 +21,24 @@ st.markdown(
 st.title("Water Quality Prediction")
 st.markdown(
     """
-    
-    
     This tool predicts the quality of water based on several environmental and social factors.
     Provide the required inputs to determine if the water is **Clean** or **Dirty**.
-
-    
-
-
-
-
     """
 )
 
 # Input features
-feature_1 = st.number_input("Population Density", help=("Enter the population density of the region in people per square kilometer. ""This value impacts the level of human activities that could influence water quality."))
-feature_2 = st.number_input("Waste Index", help=("The Waste Index is calculated based on the percentage of waste materials in the area, " "scaled between 0 and 100. For example:\n\n" "- A region with 30% plastic and 20% organic waste has a Waste Index of 50.\n" "- Higher values indicate more waste, which negatively impacts water quality."))
-feature_3 = st.number_input("Development Index", help=("The Development Index measures the socio-economic development of the region, scaled between 0 and 100. " "It considers factors like:\n\n" "- Access to clean water and sanitation\n" "- Infrastructure development\n" "- Education and literacy rates\n\n" "Higher values indicate better development, which generally correlates with improved water quality."))
+feature_1 = st.number_input("Population Density (people/km²)", help=("Enter the population density of the region in people per square kilometer. ""This value impacts the level of human activities that could influence water quality."), value=None)
+feature_2 = st.number_input("Waste Index", help=("Calculated as:\n"
+        "(Maximum Waste Composition + Other Composition) ÷ Recycling Percentage.\n\n"
+        "Waste compositions include:\n"
+        "- Food Organic Waste\n"
+        "- Glass\n"
+        "- Plastic\n"
+        "- Metal, etc.\n\n"
+        "Higher values of the Waste Index signify poorer waste management, negatively affecting water quality."), value=None)
+feature_3 = st.number_input("Development Index", help=("Calculated as:\nGDP × Literacy Rate (2010-2018).\n\n"
+        "Higher values indicate better socio-economic development, which usually correlates with better water quality. "
+        "Ensure that GDP is in trillions (e.g., 2.5 for $2.5 trillion)."), value=None)
 # Add more inputs as needed...
 
 # Predict button
@@ -47,4 +52,6 @@ if st.button("Predict"):
         st.error(f"Prediction: {result}")
 
 
+st.markdown("---")
+st.caption("Powered by Machine Learning · Developed for demonstration purposes")
 
