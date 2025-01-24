@@ -170,4 +170,4 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 .water-quality-venv/
-deployment-ui/.wqaml-ui/
+deployment-ui/.wqaml-ui-venv/
