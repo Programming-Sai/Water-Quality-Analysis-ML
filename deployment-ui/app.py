@@ -4,6 +4,16 @@ import joblib
 # Load the model
 model = joblib.load("data/XGBoost_model.joblib")
 
+st.set_page_config(
+    page_title="Water Quality Analysis",  
+    page_icon="data/fav.png",
+    menu_items={
+        'Get Help': 'https://github.com/Programming-Sai/Water-Quality-Analysis-ML/issues',
+        'Report a Bug': 'https://github.com/Programming-Sai/Water-Quality-Analysis-ML/issues',
+        'About': 'This app predicts the quality of water based on various physicochemical, socio-economic, and environmental factors. It uses machine learning models to classify water samples as Clean or Dirty based on user input.'
+    }
+)
+
 st.markdown(
     """
     <style>
