@@ -2,11 +2,11 @@ import streamlit as st
 import joblib
 
 # Load the model
-model = joblib.load("data/XGBoost_model.joblib")
+model = joblib.load("./data/XGBoost_model.joblib")
 
 st.set_page_config(
     page_title="Water Quality Analysis",  
-    page_icon="data/fav.png",
+    page_icon="./data/fav.png",
     menu_items={
         'Get Help': 'https://github.com/Programming-Sai/Water-Quality-Analysis-ML/issues',
         'Report a Bug': 'https://github.com/Programming-Sai/Water-Quality-Analysis-ML/issues',
