@@ -130,14 +130,11 @@ The model's hyperparameters were tuned using **Grid Search** and **Cross-Validat
    - **Cross-Validation Score**: 67.05%
 
 3. **Confusion Matrix**:
-   $\
-   \begin{bmatrix}
-   53 & 26 \\\
-   3003 & 2886 \\\
-   \end{bmatrix}
-   \ $
+   
+$$\begin{bmatrix} 53 & 26 \\\ 3003 & 2886 \end{bmatrix}$$
 
-<be>
+<br>
+<br>
 
 - **True Positive (TP)**: 53 (Predicted Clean and actually Clean)
 - **False Negative (FN)**: 26 (Predicted Dirty but actually Clean)
