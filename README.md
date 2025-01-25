@@ -19,11 +19,6 @@ This project aims to predict water quality using a dataset of various physicoche
 
 1. Explore the dataset and perform data visualization.
 2. Preprocess the data by handling missing values, scaling features, and engineering new features:
-   - **Development Index**: GDP × Literacy Rate (2010-2018).
-   - **Waste Index**:
-     \[
-     \text{Waste Index} = \frac{\text{Max Waste Composition} + \text{Other Composition}}{\text{Recycling Percentage}}
-     \]
 3. Train machine learning models to predict water quality.
 4. Evaluate and compare model performance.
 5. Deploy the final model using a **Streamlit-based web app**.
@@ -42,13 +37,13 @@ The preprocessing steps include:
 2. Creating derived features such as the **Waste Index** and **Development Index** using formulas:
 
    $$
-   Waste\ Index = \frac{(Max\ Waste\ Composition + Other\ Composition)}{Recycling\_Percentage}
+   Waste\ Index = \frac{(Max\ Waste\ Composition + Other\ Composition)}{Recycling\ Percentage}
    $$
 
 <br>
 
 $$
-Development\_Index = \text{GDP} \times \text{Literacy Rate}
+Development\ Index = \text{GDP} \times \text{Literacy Rate}
 $$
 
 3. Dropping unnecessary columns like 'Country', 'GDP', and 'TouristMean' to streamline the data.
