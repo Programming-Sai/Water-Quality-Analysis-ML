@@ -36,9 +36,11 @@ The preprocessing steps include:
 1. Handling missing values and normalizing data where necessary.
 2. Creating derived features such as the **Waste Index** and **Development Index** using formulas:
 
-   $$
-   Waste\ Index = \frac{(Max\ Waste\ Composition + Other\ Composition)}{Recycling\ Percentage}
-   $$
+<br>
+
+$$
+Waste\ Index = \frac{(Max\ Waste\ Composition + Other\ Composition)}{Recycling\ Percentage}
+$$
 
 <br>
 
@@ -46,26 +48,16 @@ $$
 Development\ Index = \text{GDP} \times \text{Literacy Rate}
 $$
 
+<br>
+
 3. Dropping unnecessary columns like 'Country', 'GDP', and 'TouristMean' to streamline the data.
 4. Feature engineering to ensure all relevant attributes are used for training.
 
 ---
 
----
+## Model Documentation
 
----
-
----
-
----
-
----
-
-### Model
-
-The final model used for prediction is an **XGBoost classifier**, which was selected after testing several models for accuracy and performance. The model was trained on the preprocessed dataset and evaluated using cross-validation.
-
-<!-- ![Model Performance](./assets/home.png) -->
+<p align='center'><b>Model Diagrams</b></p>
 
 <br>
 <p align='center'>
@@ -80,16 +72,6 @@ The final model used for prediction is an **XGBoost classifier**, which was sele
 </p>
 <br>
 
----
-
----
-
----
-
----
-
-## Model Documentation
-
 ### Overview
 
 The final model used in this project is an **XGBoost Classifier**, selected for its superior performance in handling tabular data with complex relationships. Below are the details about the model and its performance:
@@ -100,11 +82,12 @@ The final model used in this project is an **XGBoost Classifier**, selected for 
 
 1. **Candidate Models**:
 
-   - Logistic Regression
-   - Random Forest
-   - Gradient Boosting Machines (GBM)
-   - Support Vector Machines (SVM)
-   - **XGBoost** (eXtreme Gradient Boosting)
+   - AdaBoostClassifier
+   - RandomForestClassifier
+   - SVC (Support Vector Classifier)
+   - KNeighborsClassifier
+   - Naive Bayes Classifier (GaussianNB)
+   - **XGBClassifier** (eXtreme Gradient Boost Classifier)
 
 2. **Evaluation Criteria**:
 
@@ -125,13 +108,10 @@ The final model used in this project is an **XGBoost Classifier**, selected for 
 
 The model's hyperparameters were tuned using **Grid Search** and **Cross-Validation** to optimize performance. Below are the final hyperparameter settings:
 
-- `learning_rate`: 0.1
-- `max_depth`: 6
-- `n_estimators`: 100
-- `subsample`: 0.8
-- `colsample_bytree`: 0.8
-- `gamma`: 0
-- `reg_alpha`: 0.01
+- `learning_rate`: 0.1 --> [0.01, 0.05, 0.1]
+- `max_depth`: 5 --> [3, 5, 7]
+- `n_estimators`: 200 --> [100, 200, 300]
+- `subsample`:0.8 --> [0.8, 0.9, 1.0]
 
 ---
 
@@ -144,16 +124,25 @@ The model's hyperparameters were tuned using **Grid Search** and **Cross-Validat
 
 2. **Performance Metrics**:
 
-   - **Training Accuracy**: 94.5%
-   - **Validation Accuracy**: 92.7%
-   - **Test Accuracy**: 92.3%
-   - **AUC-ROC**: 0.95
+   - **Precision**: 99.11%
+   - **Recall**: 49.01%
+   - **F1-Score**: 65.58%
+   - **Cross-Validation Score**: 67.05%
 
 3. **Confusion Matrix**:
-   | | Predicted Clean | Predicted Dirty |
-   |------------|-----------------|-----------------|
-   | **Clean** | 155 | 8 |
-   | **Dirty** | 12 | 125 |
+   $\
+   \begin{bmatrix}
+   53 & 26 \\\
+   3003 & 2886 \\\
+   \end{bmatrix}
+   \ $
+
+<be>
+
+- **True Positive (TP)**: 53 (Predicted Clean and actually Clean)
+- **False Negative (FN)**: 26 (Predicted Dirty but actually Clean)
+- **False Positive (FP)**: 3003 (Predicted Clean but actually Dirty)
+- **True Negative (TN)**: 2886 (Predicted Dirty and actually Dirty)
 
 ---
 
@@ -161,12 +150,11 @@ The model's hyperparameters were tuned using **Grid Search** and **Cross-Validat
 
 The XGBoost model provides insights into feature importance based on the number of splits a feature contributes to the decision tree ensemble. Below are the top features influencing predictions:
 
-| Feature                | Importance (%) |
-| ---------------------- | -------------- |
-| Waste Index            | 35.4%          |
-| Population Density     | 28.6%          |
-| Development Index      | 25.2%          |
-| Other Derived Features | 10.8%          |
+| Feature            | Importance (%) |
+| ------------------ | -------------- |
+| Development Index  | 59.78%         |
+| Waste Index        | 32.65%         |
+| Population Density | 7.55%          |
 
 ---
 
@@ -184,14 +172,6 @@ While XGBoost performed best overall, the following limitations were observed:
 1. Experiment with ensemble models combining XGBoost with other classifiers for improved performance.
 2. Explore more advanced hyperparameter tuning methods such as Bayesian Optimization.
 3. Investigate additional derived features to enhance predictive accuracy.
-
----
-
-Adding this **Model Documentation** section will provide readers with a clear understanding of the model, its selection process, and performance details, making your documentation even more professional and complete.
-
----
-
----
 
 ---
 
@@ -221,6 +201,7 @@ water-quality-prediction/
 │
 ├── data/
 │   └── water_quality.csv        # The dataset
+│   └── processed_data.csv       # The Processed dataset
 │
 │
 ├── notebooks/
@@ -228,6 +209,10 @@ water-quality-prediction/
 │   └── model_building.ipynb     # For training the model
 |
 ├── deployment-ui/
+|   └── data/
+│   |     └── fav.ico
+│   |     └── XGBoost_model.joblib
+|   |
 │   ├── app.py                   # Streamlit app for deployment
 │   └── assets/                  # Custom styles and images
 |
