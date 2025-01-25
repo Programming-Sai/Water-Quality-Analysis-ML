@@ -58,6 +58,21 @@ $$
 
 The final model used for prediction is an **XGBoost classifier**, which was selected after testing several models for accuracy and performance. The model was trained on the preprocessed dataset and evaluated using cross-validation.
 
+<!-- ![Model Performance](./assets/home.png) -->
+
+<br>
+<p align='center'>
+<img src='./assets/corr-map-for-entire-dataset.png' width='400' hspace=10 vspace=10>
+<img src='./assets/correlation-per-preprocessed.png' width='400' hspace=10 vspace=10>
+<img src='./assets/confusion-matrix-per-model.png' width='400' hspace=10 vspace=10>
+<img src='./assets/feature-importance.png' width='400' hspace=10 vspace=10>
+<img src='./assets/model-comparison.png' width='400' hspace=10 vspace=10>
+<img src='./assets/roc-curve-per-model.png' width='400' hspace=10 vspace=10>
+
+<br>
+</p>
+<br>
+
 ## Installation
 
 1. Clone the repository:

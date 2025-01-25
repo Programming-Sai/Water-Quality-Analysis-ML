@@ -171,3 +171,4 @@ cython_debug/
 .pypirc
 .water-quality-venv/
 deployment-ui/.wqaml-ui-venv/
+.wvenv/
