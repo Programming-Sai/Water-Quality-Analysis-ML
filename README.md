@@ -130,7 +130,7 @@ The model's hyperparameters were tuned using **Grid Search** and **Cross-Validat
    - **Cross-Validation Score**: 67.05%
 
 3. **Confusion Matrix**:
-   
+
 $$\begin{bmatrix} 53 & 26 \\\ 3003 & 2886 \end{bmatrix}$$
 
 <br>
